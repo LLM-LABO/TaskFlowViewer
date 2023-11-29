@@ -1,0 +1,33 @@
+inherit_gem:
+  rubocop-discourse: default.yml
+
+require:
+  - rubocop-performance
+  - rubocop-rails
+  - rubocop-rspec
+
+# AllCopsオプションで全てのCopsを対象にできる
+AllCops:
+  NewCops: enable
+  Exclude:
+    - db/*
+    - bin/*
+    - lib/import_editor_object.rb
+    - 'vendor/**/*'
+
+# TODO: config/routes.rb:1:1: C: Metrics/BlockLength: Block has too many lines. [70/69]
+#       でエラーがでるが、routesの記述上一定仕方ないため、exclude設定とする
+Metrics/BlockLength:
+  Exclude:
+    - 'config/routes.rb'
+    - 'lib/tasks/data_migration.rake'
+
+Metrics/AbcSize:
+  Max: 80
+
+# specで時間の比較には'eq_time'を用いるよう指摘されるが、指摘の通りに実装するとNoMethodErrorでrspecが通らない為
+Discourse/TimeEqMatcher:
+  Enabled: false
+
+Style/FrozenStringLiteralComment:
+  Enabled: false

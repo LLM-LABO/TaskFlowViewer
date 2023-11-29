@@ -44,10 +44,10 @@ class TasksController < ApplicationController
 
   def update
     if @task.update(task_params)
-      unless @task.level == 1
-        redirect_to task_path(@task.parent_task.first), notice: "タスクを編集しました"
-      else
+      if @task.level == 1
         redirect_to tasks_path, notice: "タスクを編集しました"
+      else
+        redirect_to task_path(@task.parent_task.first), notice: "タスクを編集しました"
       end
     else
       render :edit
@@ -58,7 +58,6 @@ class TasksController < ApplicationController
     @task.destroy
     redirect_to tasks_path, notice: "タスクを削除しました"
   end
-
 
   private
   def task_params
