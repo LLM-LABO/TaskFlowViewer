@@ -1,0 +1,11 @@
+<div class="">
+  <% if @task != nil %>
+    <p class="navigator">
+      <% ids = @task.clans_to_me %>
+      <%= render 'navigator', ids: ids %>
+    </p>
+  <% end %>
+  <% @children_tasks.each do |task| %>
+    <%= render 'taskpanel', task: task %>
+  <% end %>
+</div>
