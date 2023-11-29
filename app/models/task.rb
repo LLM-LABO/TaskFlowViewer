@@ -14,11 +14,11 @@ class Task < ApplicationRecord
     descendant_ids = Array.new
     mytasks = Task.where(user_id: uid)
     mytasks.each do |task|
-      unless task.children_tasks.any?
+      if task.children_tasks.none?
         descendant_ids << task.id
       end
     end
-    return descendant_ids
+    descendant_ids
   end
 
   # 自分も含めた親子関係を配列で返すメソッド
@@ -34,7 +34,7 @@ class Task < ApplicationRecord
         task = Task.find(clan.first)
       end
     end
-    return clan
+    clan
   end
 
   # 自分の親までの親子関係を配列で返すメソッド
@@ -49,6 +49,6 @@ class Task < ApplicationRecord
         task = Task.find(clan.first)
       end
     end
-    return clan
+    clan
   end
 end
